@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import type { Product } from "../types/types";
+import type { Product } from "../scripts/interfaces.ts";
 
-const props = defineProps<{
+defineProps<{
     products: Product[];
 }>();
 
-const emit = defineEmits<{
+defineEmits<{
     (e: "edit", product: Product): void;
     (e: "duplicate", product: Product): void;
     (e: "delete", id: number): void;
@@ -29,7 +29,7 @@ const emit = defineEmits<{
                     <tr v-for="product in products" :key="product.id">
                         <td>{{ product.name }}</td>
                         <td>{{ product.team }}</td>
-                        <td>{{ product.price }}€</td>
+                        <td>{{ product.price }}$</td>
                         <td>
                             <span
                                 class="badge"

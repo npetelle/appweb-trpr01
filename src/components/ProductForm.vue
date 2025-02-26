@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, watch } from "vue";
-import type { Product } from "../types/types";
+import type { Product } from "../scripts/interfaces.ts";
 
 const props = defineProps<{
     product: Product | null;

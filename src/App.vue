@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import type { Product } from "./types/types";
+import type { Product } from "./scripts/interfaces.ts";
 import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
 import ProductList from "./components/ProductList.vue";
@@ -40,7 +40,7 @@ const searchQuery = ref("");
 
 const filterProducts = () => {
     return products.value.filter(
-        (product) =>
+        (product: Product) =>
             product.name
                 .toLowerCase()
                 .includes(searchQuery.value.toLowerCase()) ||
@@ -51,18 +51,25 @@ const filterProducts = () => {
 };
 
 const addProduct = (product: Product) => {
-    const maxId = Math.max(...products.value.map((p) => p.id), 0);
+    const maxId = Math.max(...products.value.map((p: Product) => p.id), 0);
     product.id = maxId + 1;
     products.value.push({ ...product });
 };
 
 const editProduct = (product: Product) => {
-    const index = products.value.findIndex((p) => p.id === product.id);
+    const index = products.value.findIndex((p: Product) => p.id === product.id);
     if (index !== -1) {
         products.value[index] = product;
     }
     editingProduct.value = null;
     showForm.value = false;
+};
+
+const deleteProduct = (id: number) => {
+    const index = products.value.findIndex((p: Product) => p.id === id);
+    if (index !== -1) {
+        products.value.splice(index, 1);
+    }
 };
 
 const duplicateProduct = (product: Product) => {
@@ -73,13 +80,6 @@ const duplicateProduct = (product: Product) => {
     };
     editingProduct.value = { ...duplicatedProduct };
     showForm.value = true;
-};
-
-const deleteProduct = (id: number) => {
-    const index = products.value.findIndex((p) => p.id === id);
-    if (index !== -1) {
-        products.value.splice(index, 1);
-    }
 };
 
 const handleSubmit = (product: Product) => {
