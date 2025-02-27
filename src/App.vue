@@ -8,6 +8,7 @@ import ProductDetails from "./components/ProductDetails.vue";
 import ProductForm from "./components/ProductForm.vue";
 import SearchBar from "./components/SearchBar.vue";
 
+// Utilisation de l'IA générative pour peupler la liste de products. Voire README
 const products = ref<Product[]>([
     {
         id: 1,
@@ -32,6 +33,62 @@ const products = ref<Product[]>([
         price: 79.99,
         stock: 0,
         description: "Maillot officiel des Springboks - Extérieur 2024",
+    },
+    {
+        id: 4,
+        name: "Maillot Wallabies Domicile",
+        team: "Australie",
+        price: 82.99,
+        stock: 12,
+        description: "Maillot officiel des Wallabies - Domicile 2024",
+    },
+    {
+        id: 5,
+        name: "Maillot Pumas Extérieur",
+        team: "Argentine",
+        price: 77.99,
+        stock: 5,
+        description: "Maillot officiel des Pumas - Extérieur 2024",
+    },
+    {
+        id: 6,
+        name: "Maillot Écosse Domicile",
+        team: "Écosse",
+        price: 81.99,
+        stock: 9,
+        description: "Maillot officiel de l'Écosse - Domicile 2024",
+    },
+    {
+        id: 7,
+        name: "Maillot Irlande Extérieur",
+        team: "Irlande",
+        price: 85.99,
+        stock: 10,
+        description: "Maillot officiel de l'Irlande - Extérieur 2024",
+    },
+    {
+        id: 8,
+        name: "Maillot Pays de Galles Domicile",
+        team: "Pays de Galles",
+        price: 83.99,
+        stock: 7,
+        description: "Maillot officiel du Pays de Galles - Domicile 2024",
+    },
+    {
+        id: 9,
+        name: "Maillot Italie Extérieur",
+        team: "Italie",
+        price: 78.99,
+        stock: 6,
+        description: "Maillot officiel de l'Italie - Extérieur 2024",
+    },
+    {
+        id: 10,
+        name: "Maillot Japon Domicile",
+        team: "Japon",
+        price: 80.99,
+        stock: 11,
+        description: "Maillot officiel du Japon - Domicile 2024",
     },
 ]);
 

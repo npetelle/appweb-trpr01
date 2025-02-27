@@ -35,7 +35,7 @@ defineEmits<{
                     >
                         <td>{{ product.name }}</td>
                         <td>{{ product.team }}</td>
-                        <td>{{ product.price }}€</td>
+                        <td>{{ product.price }}$</td>
                         <td>
                             <span
                                 class="badge"
