@@ -8,6 +8,7 @@ import ProductDetails from "./components/ProductDetails.vue";
 import ProductForm from "./components/ProductForm.vue";
 import SearchBar from "./components/SearchBar.vue";
 import StockAlerts from "./components/StockAlerts.vue";
+import ProductExportCSV from "./components/ProductExportCSV.vue";
 
 // Utilisation de l'IA générative pour peupler la liste de products. Voire README
 const products = ref<Product[]>([
@@ -128,7 +129,9 @@ const editProduct = (product: Product) => {
 const deleteProduct = (id: number) => {
     const index = products.value.findIndex((p: Product) => p.id === id);
     if (index !== -1) {
+        const product = products.value.find((p: Product) => p.id === id);
         products.value.splice(index, 1);
+        alert(`Le maillot "${product.name}" a été supprimé avec succès.`);
     }
 };
 
@@ -173,6 +176,9 @@ const handleSubmit = (product: Product) => {
                 </div>
                 <div class="col">
                     <SearchBar v-model="searchQuery" />
+                </div>
+                <div class="col">
+                    <ProductExportCSV :products="products" />
                 </div>
             </div>
 
