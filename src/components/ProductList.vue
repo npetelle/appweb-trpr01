@@ -66,7 +66,7 @@ defineEmits<{
                                 </button>
                                 <button
                                     class="btn btn-sm btn-danger"
-                                    @click.stop="$emit('delete', product.id)"
+                                    @click.stop="$emit('delete', product)"
                                 >
                                     Supprimer
                                 </button>

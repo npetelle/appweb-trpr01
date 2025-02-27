@@ -9,6 +9,7 @@ import ProductForm from "./components/ProductForm.vue";
 import SearchBar from "./components/SearchBar.vue";
 import StockAlerts from "./components/StockAlerts.vue";
 import ProductExportCSV from "./components/ProductExportCSV.vue";
+import ConfirmationModal from "./components/ConfirmationModal.vue";
 
 // Utilisation de l'IA générative pour peupler la liste de products. Voire README
 const products = ref<Product[]>([
@@ -98,6 +99,8 @@ const showForm = ref(false);
 const editingProduct = ref<Product | null>(null);
 const searchQuery = ref("");
 const selectedProduct = ref<Product | null>(null);
+const showDeleteModal = ref(false);
+const productToDelete = ref<Product | null>(null);
 
 const filterProducts = () => {
     return products.value.filter(
@@ -126,13 +129,30 @@ const editProduct = (product: Product) => {
     showForm.value = false;
 };
 
+const handleDeleteClick = (product: Product) => {
+    productToDelete.value = product;
+    showDeleteModal.value = true;
+};
+
+const confirmDelete = () => {
+    if (productToDelete.value) {
+        deleteProduct(productToDelete.value.id);
+        showDeleteModal.value = false;
+        productToDelete.value = null;
+    }
+};
+
+const cancelDelete = () => {
+    showDeleteModal.value = false;
+    productToDelete.value = null;
+};
+
 const deleteProduct = (id: number) => {
     const product = products.value.find((p: Product) => p.id === id);
     if (product) {
         const index = products.value.findIndex((p: Product) => p.id === id);
         if (index !== -1) {
             products.value.splice(index, 1);
-            alert(`Le maillot "${product.name}" a été supprimé avec succès.`);
         }
     }
 };
@@ -206,8 +226,18 @@ const handleSubmit = (product: Product) => {
                     }
                 "
                 @duplicate="duplicateProduct"
-                @delete="deleteProduct"
+                @delete="handleDeleteClick"
                 @selectProduct="selectedProduct = $event"
+            />
+
+            <ConfirmationModal
+                :show="showDeleteModal"
+                title="Confirmation de suppression"
+                :message="`Êtes-vous sûr de vouloir supprimer le maillot « ${
+                    productToDelete?.name || ''
+                } » ?`"
+                @confirm="confirmDelete"
+                @cancel="cancelDelete"
             />
         </main>
 
