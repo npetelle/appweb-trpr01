@@ -23,7 +23,7 @@ defineEmits<{
             <h5 class="text-muted">{{ product.team }}</h5>
             <p class="mt-3">{{ product.description }}</p>
             <div class="d-flex justify-content-between align-items-center mt-4">
-                <div class="h4 mb-0">Prix: {{ product.price }}€</div>
+                <div class="h4 mb-0">Prix: {{ product.price }}$</div>
                 <span
                     class="badge"
                     :class="{

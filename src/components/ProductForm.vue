@@ -83,7 +83,7 @@ const handleSubmit = (event: Event) => {
                 </div>
 
                 <div class="mb-3">
-                    <label for="price" class="form-label">Prix (€)</label>
+                    <label for="price" class="form-label">Prix $</label>
                     <input
                         type="number"
                         class="form-control"

@@ -7,6 +7,7 @@ import ProductList from "./components/ProductList.vue";
 import ProductDetails from "./components/ProductDetails.vue";
 import ProductForm from "./components/ProductForm.vue";
 import SearchBar from "./components/SearchBar.vue";
+import StockAlerts from "./components/StockAlerts.vue";
 
 // Utilisation de l'IA générative pour peupler la liste de products. Voire README
 const products = ref<Product[]>([
@@ -157,6 +158,7 @@ const handleSubmit = (product: Product) => {
         <Header />
 
         <main class="container py-4">
+            <StockAlerts :products="products" />
             <div class="row mb-4">
                 <div class="col">
                     <button

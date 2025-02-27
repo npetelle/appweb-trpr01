@@ -1,11 +1,14 @@
 # Boutique de Maillots de Rugby
 
-# URLs
+## Description
+À faire...
+
+## URLs
 [Repository GitHub](https://github.com/npetelle/appweb-trpr01)
 
 [GitHub Page](https://npetelle.github.io/appweb-trpr01)
 
-# Utilisation de l'IA
+## Utilisation de l'IA
 J'ai utilisé Le Chat de Mistral AI afin de générer ma liste de produits de base.
 Voici le prompt:
 ```
