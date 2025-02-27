@@ -9,13 +9,14 @@ defineEmits<{
     (e: "edit", product: Product): void;
     (e: "duplicate", product: Product): void;
     (e: "delete", id: number): void;
+    (e: "selectProduct", product: Product): void;
 }>();
 </script>
 
 <template>
     <div class="product-list">
         <div class="table-responsive">
-            <table class="table table-striped">
+            <table class="table table-hover">
                 <thead>
                     <tr>
                         <th>Nom</th>
@@ -26,10 +27,15 @@ defineEmits<{
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="product in products" :key="product.id">
+                    <tr
+                        v-for="product in products"
+                        :key="product.id"
+                        @click="$emit('selectProduct', product)"
+                        style="cursor: pointer"
+                    >
                         <td>{{ product.name }}</td>
                         <td>{{ product.team }}</td>
-                        <td>{{ product.price }}$</td>
+                        <td>{{ product.price }}€</td>
                         <td>
                             <span
                                 class="badge"
@@ -48,19 +54,19 @@ defineEmits<{
                             <div class="btn-group">
                                 <button
                                     class="btn btn-sm btn-info"
-                                    @click="$emit('edit', product)"
+                                    @click.stop="$emit('edit', product)"
                                 >
                                     Modifier
                                 </button>
                                 <button
                                     class="btn btn-sm btn-success"
-                                    @click="$emit('duplicate', product)"
+                                    @click.stop="$emit('duplicate', product)"
                                 >
                                     Dupliquer
                                 </button>
                                 <button
                                     class="btn btn-sm btn-danger"
-                                    @click="$emit('delete', product.id)"
+                                    @click.stop="$emit('delete', product.id)"
                                 >
                                     Supprimer
                                 </button>

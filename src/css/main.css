@@ -7,11 +7,3 @@
 main {
     flex: 1;
 }
-
-.modal-backdrop {
-    z-index: 1040;
-}
-
-.modal {
-    z-index: 1050;
-}

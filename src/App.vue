@@ -4,6 +4,7 @@ import type { Product } from "./scripts/interfaces.ts";
 import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
 import ProductList from "./components/ProductList.vue";
+import ProductDetails from "./components/ProductDetails.vue";
 import ProductForm from "./components/ProductForm.vue";
 import SearchBar from "./components/SearchBar.vue";
 
@@ -37,6 +38,7 @@ const products = ref<Product[]>([
 const showForm = ref(false);
 const editingProduct = ref<Product | null>(null);
 const searchQuery = ref("");
+const selectedProduct = ref<Product | null>(null);
 
 const filterProducts = () => {
     return products.value.filter(
@@ -122,6 +124,12 @@ const handleSubmit = (product: Product) => {
                 @cancel="showForm = false"
             />
 
+            <ProductDetails
+                v-if="selectedProduct"
+                :product="selectedProduct"
+                @close="selectedProduct = null"
+            />
+
             <ProductList
                 :products="filterProducts()"
                 @edit="
@@ -132,6 +140,7 @@ const handleSubmit = (product: Product) => {
                 "
                 @duplicate="duplicateProduct"
                 @delete="deleteProduct"
+                @selectProduct="selectedProduct = $event"
             />
         </main>
 
