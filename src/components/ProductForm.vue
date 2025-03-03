@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, watch } from "vue";
-import type { Product } from "../scripts/interfaces.ts";
+import type { Product } from "../scripts/interfaces";
+import { validateProduct, type ValidationErrors } from "../scripts/validation";
 
 const props = defineProps<{
     product: Product | null;
@@ -19,6 +20,9 @@ const formData = ref<Product>({
     stock: 0,
     description: "",
 });
+
+const errors = ref<ValidationErrors>({});
+const touched = ref<Record<string, boolean>>({});
 
 onMounted(() => {
     if (props.product) {
@@ -41,15 +45,30 @@ watch(
                 description: "",
             };
         }
+        errors.value = {};
+        touched.value = {};
     },
     { immediate: true },
 );
 
 const handleSubmit = (event: Event) => {
     event.preventDefault();
-    if (formData.value.name && formData.value.team) {
+
+    Object.keys(formData.value).forEach((field) => {
+        touched.value[field] = true;
+    });
+
+    const validationErrors = validateProduct(formData.value);
+    errors.value = validationErrors;
+
+    if (Object.keys(validationErrors).length === 0) {
         emit("submit", formData.value);
     }
+};
+
+const handleBlur = (field: string) => {
+    touched.value[field] = true;
+    errors.value = validateProduct(formData.value);
 };
 </script>
 
@@ -59,16 +78,24 @@ const handleSubmit = (event: Event) => {
             <h3>{{ product?.id ? "Modifier" : "Ajouter" }} un maillot</h3>
         </div>
         <div class="card-body">
-            <form @submit="handleSubmit">
+            <form @submit="handleSubmit" novalidate>
                 <div class="mb-3">
                     <label for="name" class="form-label">Nom du maillot</label>
                     <input
                         type="text"
                         class="form-control"
+                        :class="{
+                            'is-invalid': touched.name && errors.name,
+                            'is-valid': touched.name && !errors.name,
+                        }"
                         id="name"
                         v-model="formData.name"
+                        @blur="handleBlur('name')"
                         required
                     />
+                    <div class="invalid-feedback" v-if="errors.name">
+                        {{ errors.name[0] }}
+                    </div>
                 </div>
 
                 <div class="mb-3">
@@ -76,10 +103,18 @@ const handleSubmit = (event: Event) => {
                     <input
                         type="text"
                         class="form-control"
+                        :class="{
+                            'is-invalid': touched.team && errors.team,
+                            'is-valid': touched.team && !errors.team,
+                        }"
                         id="team"
                         v-model="formData.team"
+                        @blur="handleBlur('team')"
                         required
                     />
+                    <div class="invalid-feedback" v-if="errors.team">
+                        {{ errors.team[0] }}
+                    </div>
                 </div>
 
                 <div class="mb-3">
@@ -87,12 +122,20 @@ const handleSubmit = (event: Event) => {
                     <input
                         type="number"
                         class="form-control"
+                        :class="{
+                            'is-invalid': touched.price && errors.price,
+                            'is-valid': touched.price && !errors.price,
+                        }"
                         id="price"
                         v-model.number="formData.price"
+                        @blur="handleBlur('price')"
                         min="0"
                         step="0.01"
                         required
                     />
+                    <div class="invalid-feedback" v-if="errors.price">
+                        {{ errors.price[0] }}
+                    </div>
                 </div>
 
                 <div class="mb-3">
@@ -100,11 +143,19 @@ const handleSubmit = (event: Event) => {
                     <input
                         type="number"
                         class="form-control"
+                        :class="{
+                            'is-invalid': touched.stock && errors.stock,
+                            'is-valid': touched.stock && !errors.stock,
+                        }"
                         id="stock"
                         v-model.number="formData.stock"
+                        @blur="handleBlur('stock')"
                         min="0"
                         required
                     />
+                    <div class="invalid-feedback" v-if="errors.stock">
+                        {{ errors.stock[0] }}
+                    </div>
                 </div>
 
                 <div class="mb-3">
